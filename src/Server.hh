@@ -8,6 +8,7 @@
 #include "Config.hh"
 #include "cata/MDService.hh"
 #include "cppdb/frontend.h"
+#include "json/json.hh"
 
 namespace mass {
 
@@ -20,6 +21,15 @@ class Server : public cata::ServiceCallback {
   virtual void onRspMessage(const std::string& msg);
 
   virtual void onRtnMessage(const std::string& msg);
+
+ protected:
+  void subInstrus();
+
+  void sqlString(const std::string& name,
+                 json::Value& data,
+                 std::string& create_sql,
+                 std::string& insert_sql);
+
 
  private:
   std::unique_ptr<mass::Config> config_;

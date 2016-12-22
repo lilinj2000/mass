@@ -21,6 +21,7 @@ class Options : public soil::Options {
   virtual po::options_description* configOptions();
 
   std::string connection_string;
+  std::string exchange_id;
   std::string log_cfg;
 
  private:

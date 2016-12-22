@@ -18,6 +18,8 @@ Options::Options():
   config_options_.add_options()
       ("mass.connection_string", po::value<std::string>(&connection_string),
        "db connection string")
+      ("mass.exchange_id", po::value<std::string>(&exchange_id),
+       "exchange id")
       ("mass.log_cfg", po::value<std::string>(&log_cfg),
        "log config file");
 
