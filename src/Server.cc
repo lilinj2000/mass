@@ -27,13 +27,13 @@ Server::~Server() {
 void Server::onRspMessage(const std::string& msg) {
   MASS_TRACE <<"Server::onRspMessage()";
 
-  MASS_INFO <<msg;
+  MASS_DEBUG <<msg;
 }
 
 void Server::onRtnMessage(const std::string& msg) {
   MASS_TRACE <<"Server::onRtnMessage()";
 
-  MASS_INFO <<msg;
+  MASS_DEBUG <<msg;
   json::Document doc;
   json::fromString(msg, &doc);
 
