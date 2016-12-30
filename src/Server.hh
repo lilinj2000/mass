@@ -8,7 +8,6 @@
 #include "Config.hh"
 #include "cata/MDService.hh"
 #include "cppdb/frontend.h"
-#include "json/json.hh"
 #include "zod/PubService.hh"
 
 namespace mass {
