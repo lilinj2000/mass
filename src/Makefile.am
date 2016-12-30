@@ -14,6 +14,7 @@ mass_CPPFLAGS = -I$(top_srcdir) \
 		$(CATA_CPPFLAGS) \
 		$(RAPIDJSON_CPPFLAGS) \
 		$(JSON_CPPFLAGS) \
+		$(ZOD_CPPFLAGS) \
 		$(CPPDB_CPPFLAGS)
 
 
@@ -22,6 +23,7 @@ mass_LDADD = \
 	$(SOIL_LIBADD) \
 	$(CATA_LIBADD) \
 	$(JSON_LIBADD) \
+	$(ZOD_LIBADD) \
 	$(CPPDB_LIBADD)
 
 

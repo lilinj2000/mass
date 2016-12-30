@@ -636,6 +636,9 @@ ac_subst_vars='am__EXEEXT_FALSE
 am__EXEEXT_TRUE
 LTLIBOBJS
 LIBOBJS
+ZOD_LIBADD
+ZOD_CPPFLAGS
+ZOD_HOME
 JSON_LIBADD
 JSON_CPPFLAGS
 JSON_HOME
@@ -795,6 +798,7 @@ with_cppdb
 with_soil
 with_cata
 with_json
+with_zod
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1454,6 +1458,7 @@ Optional Packages:
   --with-soil             home path of the soil, defaults to $home_libs/soil
   --with-cata             home path of the cata, defaults to $CATA_HOME
   --with-json             home path of the json, defaults to $home_libs/json
+  --with-zod              home path of the zod, defaults to $ZOD_HOME
 
 Some influential environment variables:
   CXX         C++ compiler command
@@ -15406,6 +15411,22 @@ fi
 
 JSON_CPPFLAGS="-I$JSON_HOME/include"
 JSON_LIBADD="$JSON_HOME/lib/libjson.la"
+
+
+
+ZOD_HOME=$home_libs/zod
+
+# Check whether --with-zod was given.
+if test "${with_zod+set}" = set; then :
+  withval=$with_zod; ZOD_HOME="$withval"
+else
+  ZOD_HOME="$ZOD_HOME"
+fi
+
+
+
+ZOD_CPPFLAGS="-I$ZOD_HOME/include"
+ZOD_LIBADD="$ZOD_HOME/lib/libzod.la"
 
 
 

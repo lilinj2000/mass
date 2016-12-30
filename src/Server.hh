@@ -9,6 +9,7 @@
 #include "cata/MDService.hh"
 #include "cppdb/frontend.h"
 #include "json/json.hh"
+#include "zod/PubService.hh"
 
 namespace mass {
 
@@ -25,18 +26,14 @@ class Server : public cata::ServiceCallback {
  protected:
   void subInstrus();
 
-  void sqlString(const std::string& name,
-                 json::Value& data,
-                 std::string& create_sql,
-                 std::string& insert_sql);
-
-
  private:
   std::unique_ptr<mass::Config> config_;
 
   std::unique_ptr<cata::MDService> md_service_;
 
   std::unique_ptr<cppdb::session> db_;
+
+  std::unique_ptr<zod::PubService> pub_service_;
 };
 
 };  // namespace mass

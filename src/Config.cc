@@ -20,6 +20,8 @@ Options::Options():
        "db connection string")
       ("mass.exchange_id", po::value<std::string>(&exchange_id),
        "exchange id")
+      ("mass.pub_addr", po::value<std::string>(&pub_addr),
+       "pub address")
       ("mass.log_cfg", po::value<std::string>(&log_cfg),
        "log config file");
 

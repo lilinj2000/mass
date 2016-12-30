@@ -22,6 +22,7 @@ class Options : public soil::Options {
 
   std::string connection_string;
   std::string exchange_id;
+  std::string pub_addr;
   std::string log_cfg;
 
  private:

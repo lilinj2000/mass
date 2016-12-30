@@ -102,7 +102,7 @@ mass_OBJECTS = $(am_mass_OBJECTS)
 am__DEPENDENCIES_1 =
 mass_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1)
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
@@ -330,6 +330,9 @@ SOIL_HOME = @SOIL_HOME@
 SOIL_LIBADD = @SOIL_LIBADD@
 STRIP = @STRIP@
 VERSION = @VERSION@
+ZOD_CPPFLAGS = @ZOD_CPPFLAGS@
+ZOD_HOME = @ZOD_HOME@
+ZOD_LIBADD = @ZOD_LIBADD@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
@@ -396,6 +399,7 @@ mass_CPPFLAGS = -I$(top_srcdir) \
 		$(CATA_CPPFLAGS) \
 		$(RAPIDJSON_CPPFLAGS) \
 		$(JSON_CPPFLAGS) \
+		$(ZOD_CPPFLAGS) \
 		$(CPPDB_CPPFLAGS)
 
 mass_LDADD = \
@@ -403,6 +407,7 @@ mass_LDADD = \
 	$(SOIL_LIBADD) \
 	$(CATA_LIBADD) \
 	$(JSON_LIBADD) \
+	$(ZOD_LIBADD) \
 	$(CPPDB_LIBADD)
 
 mass_LDFLAGS = $(LIBADD_DL) -Wl,--no-as-needed -pthread
