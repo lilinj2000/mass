@@ -2,67 +2,69 @@
 // All rights reserved.
 
 #include "Server.hh"
-#include "Log.hh"
+#include "soil/Log.hh"
 #include "boost/regex.hpp"
 
 namespace mass {
 
-Server::Server(int argc, char* argv[]) {
-  MASS_TRACE <<"Server::Server()";
+Server::Server(
+    const rapidjson::Document& doc) {
+  SOIL_FUNC_TRACE;
 
-  config_.reset(new Config(argc, argv));
+  options_.reset(new Options(doc));
 
-  db_.reset(new cppdb::session(config_->options()->connection_string));
+  pub_service_.reset(
+      zod::PubService::create(
+          options_->pub_addr));
 
-  pub_service_.reset(zod::PubService::create(config_->options()->pub_addr));
+  db_.reset(new cppdb::session(
+      options_->dbconn_str));
 
-  md_service_.reset(cata::MDService::createService(config_->cataMDOptions(), this));
-
+  md_service_.reset(
+      cata::MDService::create(
+          doc, this));
 
   subInstrus();
 }
 
 Server::~Server() {
-  MASS_TRACE <<"Server::~Server()";
+  SOIL_FUNC_TRACE;
 }
 
-void Server::onRspMessage(const std::string& msg) {
-  MASS_TRACE <<"Server::onRspMessage()";
 
-  MASS_DEBUG <<msg;
-}
+void Server::onRtnDepthMarketData(
+    const std::string& theDepthMarketData) {
+  SOIL_FUNC_TRACE;
 
-void Server::onRtnMessage(const std::string& msg) {
-  MASS_TRACE <<"Server::onRtnMessage()";
-
-  MASS_DEBUG <<msg;
-
-  pub_service_->sendMsg(msg);
+  pub_service_->sendMsg(theDepthMarketData);
 }
 
 void Server::subInstrus() {
-  MASS_TRACE <<"Server::subInstrus()";
+  SOIL_FUNC_TRACE;
 
   try {
     std::string sql = "SELECT DISTINCT InstrumentID FROM Instrument";
-    if (!config_->options()->exchange_id.empty()) {
-      sql += " WHERE ExchangeID = '"
-          + config_->options()->exchange_id + "'";
+    if (!options_->exchange_id.empty()) {
+      sql = fmt::format("SELECT DISTINCT InstrumentID "
+                        "FROM Instrument "
+                        "WHERE ExchangeID = '{}'",
+                        options_->exchange_id);
     }
-    MASS_DEBUG <<sql;
+    SOIL_DEBUG_PRINT(sql);
 
     cppdb::result res = (*db_) <<sql;
 
-    cata::InstrumentSet instrus;
-    while(res.next()) {
+    while (res.next()) {
       std::string instru;
       res >> instru;
-      instrus.insert(instru);
-    }
 
-    md_service_->subMarketData(instrus);
+      SOIL_DEBUG_PRINT(instru);
+      char *c_instru =
+          const_cast<char*>(instru.data());
+      md_service_->subMarketData(&c_instru, 1);
+    }
   } catch (std::exception const &e) {
-    MASS_ERROR << "ERROR: " << e.what() << std::endl;
+    SOIL_ERROR("ERROR: {}", e.what());
   }
 }
 

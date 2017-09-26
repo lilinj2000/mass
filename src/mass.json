@@ -1,0 +1,34 @@
+{
+    "cata_md": {
+        "broker_id": "", 
+        "flow_path": "mdflow/", 
+        "front_address": "tcp://180.168.146.187:10010", 
+        "password": "", 
+        "protocol": "tcp", 
+        "user_id": ""
+    }, 
+    "log": {
+        "level": "trace", 
+        "sinks": [
+            {
+                "sink": {
+                    "level": "trace", 
+                    "type": "stdout_sink_mt"
+                }
+            }, 
+            {
+                "sink": {
+                    "file_name": "logs/mass.log", 
+                    "max_file_size": 5000000, 
+                    "max_files": 10, 
+                    "type": "rotating_file_sink_mt"
+                }
+            }
+        ]
+    }, 
+    "mass": {
+        "dbconn_str": "cu1712", 
+        "exchange_id": "", 
+        "pub_addr": "tcp://0.0.0.0:9991"
+    }
+}
