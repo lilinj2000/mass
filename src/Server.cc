@@ -36,6 +36,7 @@ void Server::onRtnDepthMarketData(
     const std::string& theDepthMarketData) {
   SOIL_FUNC_TRACE;
 
+  SOIL_DEBUG_PRINT(theDepthMarketData);
   pub_service_->sendMsg(theDepthMarketData);
 }
 

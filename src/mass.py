@@ -49,9 +49,9 @@ cata_md = {
     }
 
 mass = {
-    "dbconn_str": "cu1712",
-    "exchange_id": "",
-    "pub_addr": "tcp://0.0.0.0:9991"
+    "dbconn_str": "sqlite3:db=qatar.db;@pool_size=16",
+    "exchange_id": "CFFEX",
+    "pub_addr": ">tcp://127.0.0.1:9990"
     }
 
 cfg = {

@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Server.hh"
 #include "soil/Pause.hh"
+#include "soil/Log.hh"
 #include "args.hxx"
 
 int main(int argc, char* argv[]) {
@@ -38,6 +39,7 @@ int main(int argc, char* argv[]) {
 
   rapidjson::Document doc;
   soil::json::load_from_file(&doc, config_file);
+  soil::log::init(doc);
 
   std::unique_ptr<mass::Server> server;
   server.reset(new mass::Server(doc));
