@@ -91,19 +91,17 @@ AC_SUBST([SPDLOG_HOME])
 SPDLOG_CPPFLAGS="-I$SPDLOG_HOME/include -DSPDLOG_FMT_EXTERNAL"
 AC_SUBST(SPDLOG_CPPFLAGS)
 
-dnl cppdb
-CPPDB_HOME=$home_3rd/cppdb
-AC_ARG_WITH([cppdb], 
-    [AS_HELP_STRING([--with-cppdb],
-        [home path of the cppdb, defaults to $CPPDB_HOME])],
-    [CPPDB_HOME="$withval"],
-    [CPPDB_HOME="$CPPDB_HOME"])
-AC_SUBST([CPPDB_HOME])
+dnl readerwriterqueue lib
+READERWRITERQUEUE_HOME=$home_3rd/readerwriterqueue
+AC_ARG_WITH([readerwriterqueue], 
+    [AS_HELP_STRING([--with-readerwriterqueue],
+        [home path of the readerwriterqueue, defaults to $READERWRITERQUEUE_HOME])],
+    [READERWRITERQUEUE_HOME="$withval"],
+    [READERWRITERQUEUE_HOME="$READERWRITERQUEUE_HOME"])
+AC_SUBST([READERWRITERQUEUE_HOME])
 
-CPPDB_CPPFLAGS="-I$CPPDB_HOME/include"
-CPPDB_LIBADD="-L$CPPDB_HOME/lib -lcppdb"
-AC_SUBST(CPPDB_CPPFLAGS)
-AC_SUBST(CPPDB_LIBADD)
+READERWRITERQUEUE_CPPFLAGS="-I$READERWRITERQUEUE_HOME/include"
+AC_SUBST(READERWRITERQUEUE_CPPFLAGS)
 
 dnl args lib
 ARGS_HOME=$home_3rd/args

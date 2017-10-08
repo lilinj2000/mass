@@ -7,15 +7,16 @@
 #include <string>
 #include "Options.hh"
 #include "cata/MDService.hh"
-#include "cppdb/frontend.h"
 #include "zod/PubService.hh"
+#include "zod/PullService.hh"
 #include "soil/json.hh"
 #include "soil/Log.hh"
 
 namespace mass {
 
 class Server :
-      public cata::MDCallback {
+      public cata::MDCallback,
+      public zod::MsgCallback {
  public:
   explicit Server(
       const rapidjson::Document& doc);
@@ -25,13 +26,13 @@ class Server :
   virtual void onRtnDepthMarketData(
       const std::string& theDepthMarketData);
 
- protected:
-  void subInstrus();
+  virtual void msgCallback(
+      std::shared_ptr<zod::Msg> msg);
 
  private:
   std::unique_ptr<Options> options_;
   std::unique_ptr<zod::PubService> pub_service_;
-  std::unique_ptr<cppdb::session> db_;
+  std::unique_ptr<zod::PullService> pull_service_;
   std::unique_ptr<cata::MDService> md_service_;
 };
 

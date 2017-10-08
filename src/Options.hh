@@ -15,9 +15,8 @@ class Options {
   explicit Options(
       const rapidjson::Document& doc);
 
-  std::string dbconn_str;
-  std::string exchange_id;
   std::string pub_addr;
+  std::string pull_addr;
 };
 
 }  // namespace mass

@@ -13,24 +13,23 @@ Server::Server(
 
   options_.reset(new Options(doc));
 
+  pull_service_.reset(
+      zod::PullService::create(
+          options_->pull_addr,
+          this));
+
   pub_service_.reset(
       zod::PubService::create(
           options_->pub_addr));
 
-  db_.reset(new cppdb::session(
-      options_->dbconn_str));
-
   md_service_.reset(
       cata::MDService::create(
           doc, this));
-
-  subInstrus();
 }
 
 Server::~Server() {
   SOIL_FUNC_TRACE;
 }
-
 
 void Server::onRtnDepthMarketData(
     const std::string& theDepthMarketData) {
@@ -40,33 +39,25 @@ void Server::onRtnDepthMarketData(
   pub_service_->sendMsg(theDepthMarketData);
 }
 
-void Server::subInstrus() {
+void Server::msgCallback(
+    std::shared_ptr<zod::Msg> msg) {
   SOIL_FUNC_TRACE;
 
-  try {
-    std::string sql = "SELECT DISTINCT InstrumentID FROM Instrument";
-    if (!options_->exchange_id.empty()) {
-      sql = fmt::format("SELECT DISTINCT InstrumentID "
-                        "FROM Instrument "
-                        "WHERE ExchangeID = '{}'",
-                        options_->exchange_id);
-    }
-    SOIL_DEBUG_PRINT(sql);
-
-    cppdb::result res = (*db_) <<sql;
-
-    while (res.next()) {
-      std::string instru;
-      res >> instru;
-
-      SOIL_DEBUG_PRINT(instru);
-      char *c_instru =
-          const_cast<char*>(instru.data());
-      md_service_->subMarketData(&c_instru, 1);
-    }
-  } catch (std::exception const &e) {
-    SOIL_ERROR("ERROR: {}", e.what());
+  rapidjson::Document doc;
+  if (doc.Parse(
+          reinterpret_cast<const char*>(msg->data()),
+          msg->len()).HasParseError()) {
+    SOIL_DEBUG_PRINT(
+        soil::json::get_parse_error(doc));
+    return;
   }
+
+  std::string instru;
+  soil::json::get_item_value(&instru, doc, "/instru");
+
+  char *c_instru =
+      const_cast<char*>(instru.data());
+  md_service_->subMarketData(&c_instru, 1);
 }
 
 };  // namespace mass

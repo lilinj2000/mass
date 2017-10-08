@@ -17,15 +17,14 @@ mass_CPPFLAGS = -I$(top_srcdir) \
 		$(SPDLOG_CPPFLAGS) \
 		$(ZOD_CPPFLAGS) \
 		$(ARGS_CPPFLAGS) \
-		$(CPPDB_CPPFLAGS)
+		$(READERWRITERQUEUE_CPPFLAGS)
 
 
 mass_LDADD = \
 	$(BOOST_LIBADD) \
 	$(SOIL_LIBADD) \
 	$(CATA_LIBADD) \
-	$(ZOD_LIBADD) \
-	$(CPPDB_LIBADD)
+	$(ZOD_LIBADD)
 
 
 mass_LDFLAGS = $(LIBADD_DL) -Wl,--no-as-needed -pthread
