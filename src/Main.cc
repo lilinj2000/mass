@@ -41,11 +41,15 @@ int main(int argc, char* argv[]) {
   soil::json::load_from_file(&doc, config_file);
   soil::log::init(doc);
 
-  std::unique_ptr<mass::Server> server;
-  server.reset(new mass::Server(doc));
+  try {
+    std::unique_ptr<mass::Server> server;
+    server.reset(new mass::Server(doc));
 
-  std::unique_ptr<soil::Pause> pause(
-      soil::Pause::create());
+    std::unique_ptr<soil::Pause> pause(
+        soil::Pause::create());
+  } catch (std::exception& e) {
+    SOIL_ERROR("Error: {}", e.what());
+  }
 
   return 0;
 }

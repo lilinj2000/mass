@@ -50,7 +50,7 @@ cata_md = {
 
 mass = {
     "pub_addr": ">tcp://127.0.0.1:9990",
-    "pull_addr": ">tcp://127.0.0.1:8991"
+    "pull_addr": ">tcp://127.0.0.1:9981"
     }
 
 cfg = {

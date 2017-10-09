@@ -3,6 +3,7 @@
 
 #include "Server.hh"
 #include "soil/Log.hh"
+#include "soil/hexdump.hh"
 #include "boost/regex.hpp"
 
 namespace mass {
@@ -13,11 +14,13 @@ Server::Server(
 
   options_.reset(new Options(doc));
 
+  SOIL_DEBUG_PRINT(options_->pull_addr);
   pull_service_.reset(
       zod::PullService::create(
           options_->pull_addr,
           this));
 
+  SOIL_DEBUG_PRINT(options_->pub_addr);
   pub_service_.reset(
       zod::PubService::create(
           options_->pub_addr));
@@ -42,6 +45,11 @@ void Server::onRtnDepthMarketData(
 void Server::msgCallback(
     std::shared_ptr<zod::Msg> msg) {
   SOIL_FUNC_TRACE;
+
+  SOIL_DEBUG_PRINT(soil::hexdump(
+      "Pull received:",
+      msg->data(),
+      msg->len()));
 
   rapidjson::Document doc;
   if (doc.Parse(
