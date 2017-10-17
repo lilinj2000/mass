@@ -26,8 +26,14 @@ class Server :
   virtual void onRtnDepthMarketData(
       const std::string& theDepthMarketData);
 
-  virtual void msgCallback(
+  virtual void onMsg(
       std::shared_ptr<zod::Msg> msg);
+
+  virtual void onStart() {
+  }
+
+  virtual void onStop() {
+  }
 
  private:
   std::unique_ptr<Options> options_;

@@ -42,7 +42,7 @@ void Server::onRtnDepthMarketData(
   pub_service_->sendMsg(theDepthMarketData);
 }
 
-void Server::msgCallback(
+void Server::onMsg(
     std::shared_ptr<zod::Msg> msg) {
   SOIL_FUNC_TRACE;
 
